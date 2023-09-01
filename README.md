@@ -2,6 +2,12 @@
 
 ChobbyCode Update Checker is a free open source tool designed to make checking for updates easier. The application is run on a DLL. The DLL can be shipped with the application. Unlike old DLL's this DLL cannot be broken as c# DLL's are shipped with the application so legacy features can be kept :)
 
+### Why use this
+- ✅ - Makes code tidier
+- ✅ - Simple & Easy
+- ✅ - Once setup once requires nothing else
+
+  
 ### Features
 - ✅ - Checking for updates
 - ✅ - Data caching to reduce API calls
