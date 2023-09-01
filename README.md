@@ -5,7 +5,7 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 ### Why use this
 - ✅ - Makes code tidier
 - ✅ - Simple & Easy
-- ✅ - Once setup once requires nothing else
+- ✅ - 4 Click Install
 
   
 ### Features
