@@ -16,7 +16,13 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
 
-## Usage
+## Installation
+
+## NuGet
+
+Click [here](https://www.nuget.org/packages/Update_Checker/0.1.0-beta) to view the NuGet page of the file. Or in Visual Studios add NuGet package called Update_Checker by ChobbyCode.
+
+## Manual Installation
 
 ### Dependencies
 
@@ -33,6 +39,8 @@ This can be done by navigating to the Project in the solution explorer > Add > P
 ![Screenshot 2023-09-01 113603](https://github.com/ChobbyCode/Update-Checker/blob/master/assets/github/setup.png)
 
 In project references go down to Browse, if you have added the DLL before just make sure it is checked and click if okay. If you haven't added the DLL before then go to the bottom right click Browse. Then navigate to the location where you stored the DLL file. Make sure the DLL file is checked and click okay.
+
+## Usage
 
 ### Setup
 
