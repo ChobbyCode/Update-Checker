@@ -20,7 +20,7 @@ If you want to contribute fork the repository then create a push request and I w
 
 ### Dependencies
 
-Update-Checker requires NetwonSoft as a NuGet Package, if you do not have already download the NuGet package, learn how to add it [here](**docs/CONTRIBUTING.md**).
+Update-Checker requires NetwonSoft as a NuGet Package, if you do not have already download the NuGet package, learn how to add it [here](https://learn.microsoft.com/en-us/nuget/quickstart/install-and-use-a-package-in-visual-studio).
 
 ### Installation
 
