@@ -20,7 +20,7 @@ If you want to contribute fork the repository then create a push request and I w
 
 ## NuGet
 
-Click [here](https://www.nuget.org/packages/Update_Checker/0.1.0-beta) to view the NuGet page of the file. Or in Visual Studios add NuGet package called Update_Checker by ChobbyCode.
+Click [here](https://www.nuget.org/packages/Update_Checker/0.1.0-beta) to view the NuGet page of the file. Or in Visual Studios add NuGet package called Update_Checker by ChobbyCode and make sure show prereleases is enabled.
 
 ## Manual Installation
 
