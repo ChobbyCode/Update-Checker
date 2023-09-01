@@ -8,6 +8,8 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 - ❌ - Automatically download updates or atleast get the download link
 - ❌ - Access private repos using auth key
 
+If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
+
 ## Usage
 
 ### Dependencies
@@ -109,4 +111,20 @@ checker.LatestVersionTag();
 ```
 
 Returns the current version tag in string. No parameters.
+
+## CheckForUpdates
+
+```c#
+checker.CheckForUpdates(currentVersion);
+```
+
+Returns true if there is a update and false if there is not a update. Takes string currentVersion (i.e v0.1.0, v1.6.5)
+
+## GetVersionPart
+
+```c#
+checker.GetVersionPart(part);
+```
+
+Returns a part of the latest version (i.e. if latest version was v1.2.3 and input was 0 it would return 1, if it was 1 it would retunr 2, so on), takes int part from 0 - 2.
 
