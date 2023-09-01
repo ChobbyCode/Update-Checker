@@ -30,7 +30,7 @@ Next we need to add the Update-Checker to the application,
 
 This can be done by navigating to the Project in the solution explorer > Add > Project Reference
 
-![Screenshot 2023-09-01 113603](https://github.com/ChobbyCode/Update-Checker/assets/100038952/9516d9b7-381c-43cf-b5ec-3e48620b6f3e)
+![Screenshot 2023-09-01 113603](https://github.com/ChobbyCode/Update-Checker/blob/master/assets/github/setup.png)
 
 In project references go down to Browse, if you have added the DLL before just make sure it is checked and click if okay. If you haven't added the DLL before then go to the bottom right click Browse. Then navigate to the location where you stored the DLL file. Make sure the DLL file is checked and click okay.
 
