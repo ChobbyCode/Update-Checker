@@ -5,7 +5,7 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 ### Why use this
 - ✅ - Makes code tidier
 - ✅ - Simple & Easy
-- ✅ - Once setup once requires nothing else
+- ✅ - 4 Click Install
 
   
 ### Features
@@ -16,11 +16,17 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
 
-## Usage
+## Installation
+
+## NuGet
+
+Click [here](https://www.nuget.org/packages/Update_Checker/0.1.0-beta) to view the NuGet page of the file. Or in Visual Studios add NuGet package called Update_Checker by ChobbyCode and make sure show prereleases is enabled.
+
+## Manual Installation
 
 ### Dependencies
 
-Update-Checker requires NetwonSoft as a NuGet Package, if you do not have already download the NuGet package, learn how to add it [here](**docs/CONTRIBUTING.md**).
+Update-Checker requires NetwonSoft as a NuGet Package, if you do not have already download the NuGet package, learn how to add it [here](https://learn.microsoft.com/en-us/nuget/quickstart/install-and-use-a-package-in-visual-studio).
 
 ### Installation
 
@@ -30,9 +36,11 @@ Next we need to add the Update-Checker to the application,
 
 This can be done by navigating to the Project in the solution explorer > Add > Project Reference
 
-![Screenshot 2023-09-01 113603](https://github.com/ChobbyCode/Update-Checker/assets/100038952/9516d9b7-381c-43cf-b5ec-3e48620b6f3e)
+![Screenshot 2023-09-01 113603](https://github.com/ChobbyCode/Update-Checker/blob/master/assets/github/setup.png)
 
 In project references go down to Browse, if you have added the DLL before just make sure it is checked and click if okay. If you haven't added the DLL before then go to the bottom right click Browse. Then navigate to the location where you stored the DLL file. Make sure the DLL file is checked and click okay.
+
+## Usage
 
 ### Setup
 
