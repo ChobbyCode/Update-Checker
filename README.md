@@ -11,7 +11,7 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 ### Features
 - ✅ - Checking for updates
 - ✅ - Data caching to reduce API calls
-- ❌ - Automatically download updates or atleast get the download link
+- ✅ - Automatic Downloads (via Chill)
 - ❌ - Access private repos using auth key
 
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
@@ -28,7 +28,7 @@ Click [here](https://www.nuget.org/packages/Update_Checker/0.1.0-beta) to view t
 
 Update-Checker requires NetwonSoft as a NuGet Package, if you do not have already download the NuGet package, learn how to add it [here](https://learn.microsoft.com/en-us/nuget/quickstart/install-and-use-a-package-in-visual-studio).
 
-### Installation
+### Downloads
 
 To install Update-Checker simpily navigate to the 'Releases' and download the latest DLL. You can store the DLL anywhere on your computer but I recommend storing it in a folder which you will not forget about. You can also store the DLL in your application. This doesn't really need to be done as the DLL is copied when the application is build. So it can be just stored in a folder on the Desktop.
 
@@ -94,8 +94,6 @@ if(await checker.CheckForUpdates("v0.1.0")){
 }
 ```
 
-# Docs
-
 ## Simple Demo
 
 ```c#
@@ -116,29 +114,3 @@ public static async void checkForUpdate()
 }
 ```
 Sees if there is a new update available. If there is a new update available it prints there is a new update available to the console and the latest version.
-
-
-## GetLatestVersionTag
-
-```c#
-checker.LatestVersionTag();
-```
-
-Returns the current version tag in string. No parameters.
-
-## CheckForUpdates
-
-```c#
-checker.CheckForUpdates(currentVersion);
-```
-
-Returns true if there is a update and false if there is not a update. Takes string currentVersion (i.e v0.1.0, v1.6.5)
-
-## GetVersionPart
-
-```c#
-checker.GetVersionPart(part);
-```
-
-Returns a part of the latest version (i.e. if latest version was v1.2.3 and input was 0 it would return 1, if it was 1 it would retunr 2, so on), takes int part from 0 - 2.
-
