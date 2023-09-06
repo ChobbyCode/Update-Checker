@@ -12,7 +12,11 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 - ✅ - Checking for updates
 - ✅ - Data caching to reduce API calls
 - ✅ - Automatic Downloads (via Chill)
+
+### Planned Features
 - ❌ - Access private repos using auth key
+- ❌ - Log Files
+- ❌ - Multiple app support
 
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
 
