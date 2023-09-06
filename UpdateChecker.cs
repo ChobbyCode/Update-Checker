@@ -17,9 +17,11 @@ namespace Update_Checker
         public string REPONAME = null;
         public string VERSION = null;
 
-        //Cache the JSON to minimise the amount of API calls to the github api so that no get sued or something like that :)
-        private string JSONCache = "";
-        private DateTime JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5));
+        //Cache the JSON to minimise the amount of API calls to the github api so that no get sued or something like that :
+
+        // Constructor File
+
+        Cacher cacher = new Cacher();
 
 
         public async Task<string> LatestVersionTag()
@@ -30,7 +32,7 @@ namespace Update_Checker
             }
             else
             {
-                if(JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
+                if(cacher.JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || cacher.JSONCache == "")
                 {
                     //We can recache
 
@@ -51,8 +53,8 @@ namespace Update_Checker
                             {
                                 // Reads
                                 string myContent = await content.ReadAsStringAsync();
-                                JSONCache = myContent; // Sets the cache
-                                JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5)); // Sets cache age
+                                cacher.JSONCache = myContent; // Sets the cache
+                                cacher.JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5)); // Sets cache age
                                 JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
 
                                 string versionTag = info!.tag_name;
@@ -67,7 +69,7 @@ namespace Update_Checker
                 else
                 {
                     //No point in recaching
-                    string myContent = JSONCache;
+                    string myContent = cacher.JSONCache;
                     JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
                     
                     string versionTag = info!.tag_name;
@@ -81,7 +83,7 @@ namespace Update_Checker
         public async Task<int> GetVersionPart(int part)
         {
 
-            if (JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
+            if (cacher.JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || cacher.JSONCache == "")
             {
 
                 if (OWNERNAME == null || REPONAME == null)
@@ -107,8 +109,8 @@ namespace Update_Checker
                             using (HttpContent content = response.Content)
                             {
                                 string myContent = await content.ReadAsStringAsync();
-                                JSONCache = myContent; // Sets the cache
-                                JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5)); // Sets cache age
+                                cacher.JSONCache = myContent; // Sets the cache
+                                cacher.JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5)); // Sets cache age
                                 JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
 
                                 string versionTag = info!.tag_name + ".";
@@ -192,7 +194,7 @@ namespace Update_Checker
             else
             {
 
-                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(JSONCache);
+                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(cacher.JSONCache);
 
                 string versionTag = info!.tag_name + ".";
 
@@ -324,7 +326,7 @@ namespace Update_Checker
             int CurrentBuildVersion = Convert.ToInt16(word);
 
 
-            if (JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
+            if (cacher.JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || cacher.JSONCache == "")
             {
 
                 if (OWNERNAME == null || REPONAME == null)
@@ -418,7 +420,7 @@ namespace Update_Checker
             else
             {
                 // Reads
-                string myContent = JSONCache;
+                string myContent = cacher.JSONCache;
                 JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
 
 

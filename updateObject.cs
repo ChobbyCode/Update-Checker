@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Update_Checker
 {
+    /// <summary>
+    /// updateObject bob = checker.getStuff...();
+    /// </summary>
     public class updateObject
     {
         // Main Information
