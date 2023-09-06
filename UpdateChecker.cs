@@ -22,10 +22,9 @@ namespace Update_Checker
         private DateTime JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5));
 
 
-        public async Task<string> LatestVersionTag(scanableUrl data)
+        public async Task<string> LatestVersionTag()
         {
-
-            if (data.OWNERNAME == null || data.REPONAME == null)
+            if (OWNERNAME == null || REPONAME == null)
             {
                 return "ERROR: Creds Not Setup. Read the documentation at https://github.com/ChobbyCode/Update-Checker";
             }
@@ -79,13 +78,13 @@ namespace Update_Checker
             }
         }
 
-        public async Task<int> GetVersionPart(int part, scanableUrl data)
+        public async Task<int> GetVersionPart(int part)
         {
 
             if (JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
             {
 
-                if (data.OWNERNAME == null || data.REPONAME == null)
+                if (OWNERNAME == null || REPONAME == null)
                 {
                     return -1;
                 }
@@ -272,10 +271,8 @@ namespace Update_Checker
         }
 
 
-        public async Task<bool> CheckForUpdates(scanableUrl data)
+        public async Task<bool> CheckForUpdates(string currentVersionTag)
         {
-            string currentVersionTag = data.currentVersion;
-
             if(currentVersionTag == null)
             {
                 return false;
