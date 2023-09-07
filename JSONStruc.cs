@@ -11,5 +11,12 @@ namespace Update_Checker
         public string tag_name { get; set; }
         public string html_url { get; set; }
         public string name { get; set; }
+
+        public string? error { get; set; }
+
+        public JSONStruc()
+        {
+            error = null;
+        }
     }
 }

@@ -13,472 +13,202 @@ namespace Update_Checker
     public class UpdateChecker
     {
         // These variables can be set with the use of a method
-        public string OWNERNAME = null;
-        public string REPONAME = null;
-        public string VERSION = null;
+        public string? OWNERNAME = null;
+        public string? REPONAME = null;
+        public string? VERSION = null;
 
-        //Cache the JSON to minimise the amount of API calls to the github api so that no get sued or something like that :)
-        private string JSONCache = "";
-        private DateTime JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5));
+        //Cache the JSON to minimise the amount of API calls to the github api so that no get sued or something like that :
+        internal JSONStruc? JSONCache = null;
+        internal DateTime JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5));
 
+        // Constructor File
 
+        /// <summary>
+        /// Gets the latest version from tag
+        /// </summary>
+        /// <returns>Returns the latest version in tag in string</returns>
         public async Task<string> LatestVersionTag()
         {
-            if (OWNERNAME == null || REPONAME == null)
+            if (!validCreds())
             {
-                return "ERROR: Creds Not Setup. Read the documentation at https://github.com/ChobbyCode/Update-Checker";
+                // Error message
+                return "Please configure the application before making Http calls. Read the documentation at https://github.com/ChobbyCode/Update-Checker";
             }
             else
             {
-                if(JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
-                {
-                    //We can recache
+                // Create Variables
 
-                    //Sets the url
+                JSONStruc? response;
+
+                if (possibleCache())
+                {
+                    // Recache the information
+                    // Create a url to pass thru
                     string url = @"https://api.github.com/repos/" + OWNERNAME + "/" + REPONAME + "/releases/latest";
 
-                    // Creates a new http client
-                    using (HttpClient client = new HttpClient())
-                    {
+                    // Makes and stores http call
+                    apiCaller apiCaller = new apiCaller();
+                    response = await apiCaller.mkHttpCall(url);
 
-                        client.DefaultRequestHeaders.Add("User-Agent", "ChobbyCodeUpdateChecker");
-
-                        //Passes the url to the http client and does stuff
-                        using (HttpResponseMessage response = await client.GetAsync(url))
-                        {
-
-                            using (HttpContent content = response.Content)
-                            {
-                                // Reads
-                                string myContent = await content.ReadAsStringAsync();
-                                JSONCache = myContent; // Sets the cache
-                                JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5)); // Sets cache age
-                                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
-
-                                string versionTag = info!.tag_name;
-
-                                //Returns the version
-                                return versionTag;
-
-                            }
-                        }
-                    }
+                    // Writes to cache
+                    cache(response);
                 }
                 else
                 {
-                    //No point in recaching
-                    string myContent = JSONCache;
-                    JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
-                    
-                    string versionTag = info!.tag_name;
-
-                    //Returns the version
-                    return versionTag;
+                    // Get information from cache
+                    response = JSONCache;
                 }
+
+                // Get information
+                string versionTag = response!.tag_name;
+
+                //Returns the version
+                return versionTag;
             }
         }
 
-        public async Task<int> GetVersionPart(int part)
+
+        /// <summary>
+        /// Returns a part of a version. If version is v6.1.2, and input was 0 it would return 6 if 1 it would return 1 and if 2 it would return 2
+        /// </summary>
+        /// <param name="part"></param>
+        /// <returns></returns>
+        public async Task<string> GetVersionPart(int part)
         {
 
-            if (JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
+            if (!validCreds())
             {
-
-                if (OWNERNAME == null || REPONAME == null)
-                {
-                    return -1;
-                }
-                else
-                {
-
-                    string url = @"https://api.github.com/repos/" + OWNERNAME + "/" + REPONAME + "/releases/latest";
-
-
-                    // Creates a new http client
-                    using (HttpClient client = new HttpClient())
-                    {
-
-                        client.DefaultRequestHeaders.Add("User-Agent", "ChobbyCodeUpdateChecker");
-
-                        //Passes the url to the http client and does stuff
-                        using (HttpResponseMessage response = await client.GetAsync(url))
-                        {
-
-                            using (HttpContent content = response.Content)
-                            {
-                                string myContent = await content.ReadAsStringAsync();
-                                JSONCache = myContent; // Sets the cache
-                                JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5)); // Sets cache age
-                                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
-
-                                string versionTag = info!.tag_name + ".";
-
-                                string letter = "";
-                                string word = "";
-                                int charLet = 1;
-                                while (letter != ".")
-                                {
-                                    word = word + letter;
-
-                                    letter = versionTag[charLet].ToString();
-                                    charLet += 1;
-                                }
-                                string MainVersion = word;
-
-                                word = "";
-                                letter = "";
-                                while (letter != ".")
-                                {
-                                    word = word + letter;
-
-                                    letter = versionTag[charLet].ToString();
-                                    charLet += 1;
-                                }
-                                string MinorVersion = word;
-
-                                word = "";
-                                letter = "";
-                                while (letter != ".")
-                                {
-                                    word = word + letter;
-
-                                    letter = versionTag[charLet].ToString();
-                                    charLet += 1;
-                                }
-                                string BuildVersion = word;
-
-                                if (part == 0)
-                                {
-                                    try
-                                    {
-                                        return Convert.ToInt16(MainVersion);
-                                    }
-                                    catch
-                                    {
-                                        return -1;
-                                    }
-                                }
-                                else if (part == 1)
-                                {
-                                    try
-                                    {
-                                        return Convert.ToInt16(MinorVersion);
-                                    }
-                                    catch
-                                    {
-                                        return -1;
-                                    }
-                                }
-                                else if (part == 2)
-                                {
-                                    try
-                                    {
-                                        return Convert.ToInt16(BuildVersion); ;
-                                    }
-                                    catch
-                                    {
-                                        return -1;
-                                    }
-                                }
-                                else
-                                {
-                                    return -1;
-                                }
-                            }
-                        }
-                    }
-                }
+                return "Please configure the application before making Http calls. Read the documentation at https://github.com/ChobbyCode/Update-Checkers";
             }
             else
             {
-
-                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(JSONCache);
-
-                string versionTag = info!.tag_name + ".";
-
-                string letter = "";
-                string word = "";
-                int charLet = 1;
-                while (letter != ".")
+                JSONStruc? response;
+                if (possibleCache())
                 {
-                    word = word + letter;
+                    // Recache the information
+                    // Create a url to pass thru
+                    string url = @"https://api.github.com/repos/" + OWNERNAME + "/" + REPONAME + "/releases/latest";
 
-                    letter = versionTag[charLet].ToString();
-                    charLet += 1;
-                }
-                string MainVersion = word;
+                    // Makes and stores api call
+                    apiCaller apiCaller = new apiCaller();
+                    response = await apiCaller.mkHttpCall(url);
 
-                word = "";
-                letter = "";
-                while (letter != ".")
-                {
-                    word = word + letter;
-
-                    letter = versionTag[charLet].ToString();
-                    charLet += 1;
-                }
-                string MinorVersion = word;
-
-                word = "";
-                letter = "";
-                while (letter != ".")
-                {
-                    word = word + letter;
-
-                    letter = versionTag[charLet].ToString();
-                    charLet += 1;
-                }
-                string BuildVersion = word;
-
-                if (part == 0)
-                {
-                    try
-                    {
-                        return Convert.ToInt16(MainVersion);
-                    }
-                    catch
-                    {
-                        return -1;
-                    }
-                }
-                else if (part == 1)
-                {
-                    try
-                    {
-                        return Convert.ToInt16(MinorVersion);
-                    }
-                    catch
-                    {
-                        return -1;
-                    }
-                }
-                else if (part == 2)
-                {
-                    try
-                    {
-                        return Convert.ToInt16(BuildVersion); ;
-                    }
-                    catch
-                    {
-                        return -1;
-                    }
+                    // Writes to cache
+                    cache(response);
                 }
                 else
                 {
-                    return -1;
+                    // Get information from cache
+                    response = JSONCache;
                 }
+
+                // Get information
+                string versionTag = response!.tag_name;
+
+                Parser parser = new Parser();
+
+                //Returns the version
+                return parser.parseVersion(versionTag)[part];
             }
         }
 
 
         public async Task<bool> CheckForUpdates(string currentVersionTag)
         {
-            if(currentVersionTag == null)
+            if (currentVersionTag == null)
+            {
+                // Makes sure the input isn't null and is valid
+                return false;
+            }
+
+            string currentVersion = currentVersionTag + "."; // Adds a dot to the end to prevent out of range error
+
+            // Parse current version
+            Parser parser = new Parser();
+            string[] currentVersionSplit = parser.parseVersion(currentVersion);
+
+            if (!validCreds())
             {
                 return false;
             }
 
-            /// <summary>
-            /// Makes a http request to url does some magic and returns true if an update is available and false if there is not. Check documentation at https://github.com/ChobbyCode/Update-Checker
-            /// </summary>
-            /// <param name="currentVersion"></param>
-            /// <param name="url"></param>
-            /// <returns></returns>
-            /// 
-            string currentVersion = currentVersionTag + "."; // Adds a dot to the end to prevent out of range error
+            JSONStruc response;
 
-            // Parse the current version into chunks
-
-            string letter = "";
-            string word = "";
-            int charLet = 1;
-            while (letter != ".")
+            if (possibleCache())
             {
-                word = word + letter;
+                // Set the URL
+                string url = @"https://api.github.com/repos/" + OWNERNAME + "/" + REPONAME + "/releases/latest";
 
-                letter = currentVersion[charLet].ToString();
-                charLet += 1;
-            }
-            int CurrentMainVersion = Convert.ToInt16(word);
+                // Make api client and calls
+                apiCaller apiCaller = new apiCaller();
+                response = await apiCaller.mkHttpCall(url);
 
-            word = "";
-            letter = "";
-            while (letter != ".")
-            {
-                word = word + letter;
-
-                letter = currentVersion[charLet].ToString();
-                charLet += 1;
-            }
-            int CurrentMinorVersion = Convert.ToInt16(word);
-
-            word = "";
-            letter = "";
-            while (letter != ".")
-            {
-                word = word + letter;
-
-                letter = currentVersion[charLet].ToString();
-                charLet += 1;
-            }
-            int CurrentBuildVersion = Convert.ToInt16(word);
-
-
-            if (JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == "")
-            {
-
-                if (OWNERNAME == null || REPONAME == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    string url = @"https://api.github.com/repos/" + OWNERNAME + "/" + REPONAME + "/releases/latest";
-
-
-                    // Creates a new http client
-                    using (HttpClient client = new HttpClient())
-                    {
-
-                        client.DefaultRequestHeaders.Add("User-Agent", "ChobbyCodeUpdateChecker");
-
-                        //Passes the url to the http client and does stuff
-                        using (HttpResponseMessage response = await client.GetAsync(url))
-                        {
-
-                            using (HttpContent content = response.Content)
-                            {
-                                // Reads
-                                string myContent = await content.ReadAsStringAsync();
-                                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
-
-
-                                // Gets the latest version
-                                string versionTag = info!.tag_name + ".";
-
-                                // Parse the latest version as above
-
-                                letter = "";
-                                word = "";
-                                charLet = 1;
-                                while (letter != ".")
-                                {
-                                    word = word + letter;
-
-                                    letter = versionTag[charLet].ToString();
-                                    charLet += 1;
-                                }
-                                int LatestMainVersion = Convert.ToInt16(word);
-
-                                word = "";
-                                letter = "";
-                                while (letter != ".")
-                                {
-                                    word = word + letter;
-
-                                    letter = versionTag[charLet].ToString();
-                                    charLet += 1;
-                                }
-                                int LatestMinorVersion = Convert.ToInt16(word);
-
-                                word = "";
-                                letter = "";
-                                while (letter != ".")
-                                {
-                                    word = word + letter;
-
-                                    letter = versionTag[charLet].ToString();
-                                    charLet += 1;
-                                }
-                                int LatestBuildVersion = Convert.ToInt16(word);
-
-                                // Compares the values
-                                if (LatestMainVersion > CurrentMainVersion)
-                                {
-                                    return true;
-                                }
-                                else if (LatestMinorVersion > CurrentMinorVersion)
-                                {
-                                    return true;
-                                }
-                                else if (LatestBuildVersion > CurrentBuildVersion)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-
-                            }
-                        }
-                    }
-                }
+                // Writes to cache
+                cache(response);
             }
             else
             {
-                // Reads
-                string myContent = JSONCache;
-                JSONStruc info = JsonConvert.DeserializeObject<JSONStruc>(myContent);
-
-
-                // Gets the latest version
-                string versionTag = info!.tag_name + ".";
-
-                // Parse the latest version as above
-
-                letter = "";
-                word = "";
-                charLet = 1;
-                while (letter != ".")
-                {
-                    word = word + letter;
-
-                    letter = versionTag[charLet].ToString();
-                    charLet += 1;
-                }
-                int LatestMainVersion = Convert.ToInt16(word);
-
-                word = "";
-                letter = "";
-                while (letter != ".")
-                {
-                    word = word + letter;
-
-                    letter = versionTag[charLet].ToString();
-                    charLet += 1;
-                }
-                int LatestMinorVersion = Convert.ToInt16(word);
-
-                word = "";
-                letter = "";
-                while (letter != ".")
-                {
-                    word = word + letter;
-
-                    letter = versionTag[charLet].ToString();
-                    charLet += 1;
-                }
-                int LatestBuildVersion = Convert.ToInt16(word);
-
-                // Compares the values
-                if (LatestMainVersion > CurrentMainVersion)
-                {
-                    return true;
-                }
-                else if (LatestMinorVersion > CurrentMinorVersion)
-                {
-                    return true;
-                }
-                else if (LatestBuildVersion > CurrentBuildVersion)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                response = JSONCache;
             }
+
+            // Get information
+            string[] latestVersionSplit = parser.parseVersion(response!.tag_name);
+
+            if (Convert.ToInt16(latestVersionSplit[0]) > Convert.ToInt16(currentVersionSplit[0])
+                || Convert.ToInt16(latestVersionSplit[1]) > Convert.ToInt16(currentVersionSplit[1])
+                || Convert.ToInt16(latestVersionSplit[2]) > Convert.ToInt16(currentVersionSplit[2]))
+            {
+                return true;
+            }
+
+            // Else
+            return false;
+
+
+        }
+
+        internal bool validCreds()
+        {
+            if (OWNERNAME == null || REPONAME == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        // Caching functions
+
+        internal void clearCache()
+        {
+            // Clear the cache
+            JSONCache = null;
+            JSONCacheAge = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Cacher
+        /// </summary>
+        /// <returns>True if can recache and false if can't recache</returns>
+        internal bool possibleCache()
+        {
+            if (JSONCacheAge.TimeOfDay < DateTime.Now.TimeOfDay || JSONCache == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        internal void cache(JSONStruc data)
+        {
+            JSONCache = data;
+            JSONCacheAge = DateTime.Now.Add(TimeSpan.FromMinutes(5));
         }
     }
 }
