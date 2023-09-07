@@ -1,6 +1,8 @@
 # Update-Checker
 
-ChobbyCode Update Checker is a free open source tool designed to make checking for updates easier. The application is run on a DLL. The DLL can be shipped with the application. Unlike old DLL's this DLL cannot be broken as c# DLL's are shipped with the application so legacy features can be kept :)
+ChobbyCode Update Checker is a free open source tool designed to make checking for updates on github easier. UC has features such as getting the latest version, seeing if a update is available and more. UC has native Chill support. However, even though Chill is my own software, it does get flagged by AntiViruses for been dangerous which may deter anyone from using YOUR software.
+
+> #### I usually abbreviate the app name to just UC, so don't get confused.
 
 ### Why use this
 - ✅ - Makes code tidier
@@ -16,7 +18,8 @@ ChobbyCode Update Checker is a free open source tool designed to make checking f
 ### Planned Features
 - ❌ - Access private repos using auth key
 - ❌ - Log Files
-- ❌ - Multiple app support
+- ❌ - Multiple repo support
+- ❌ - Add support for not github stuff :)
 
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
 
@@ -24,25 +27,7 @@ If you want to contribute fork the repository then create a push request and I w
 
 ## NuGet
 
-Click [here](https://www.nuget.org/packages/Update_Checker/0.1.0-beta) to view the NuGet page of the file. Or in Visual Studios add NuGet package called Update_Checker by ChobbyCode and make sure show prereleases is enabled.
-
-## Manual Installation
-
-### Dependencies
-
-Update-Checker requires NetwonSoft as a NuGet Package, if you do not have already download the NuGet package, learn how to add it [here](https://learn.microsoft.com/en-us/nuget/quickstart/install-and-use-a-package-in-visual-studio).
-
-### Downloads
-
-To install Update-Checker simpily navigate to the 'Releases' and download the latest DLL. You can store the DLL anywhere on your computer but I recommend storing it in a folder which you will not forget about. You can also store the DLL in your application. This doesn't really need to be done as the DLL is copied when the application is build. So it can be just stored in a folder on the Desktop.
-
-Next we need to add the Update-Checker to the application, 
-
-This can be done by navigating to the Project in the solution explorer > Add > Project Reference
-
-![Screenshot 2023-09-01 113603](https://github.com/ChobbyCode/Update-Checker/blob/master/assets/github/setup.png)
-
-In project references go down to Browse, if you have added the DLL before just make sure it is checked and click if okay. If you haven't added the DLL before then go to the bottom right click Browse. Then navigate to the location where you stored the DLL file. Make sure the DLL file is checked and click okay.
+To install with NuGet, create a new c# project and click on your solution or project, then click "Manage NuGet Packages", under Browse make sure "Show Pre-releases" is checked and then last of all search for Update_Checker and add the one ChobbyCode.
 
 ## Usage
 
