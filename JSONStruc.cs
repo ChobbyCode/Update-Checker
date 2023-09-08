@@ -8,11 +8,14 @@ namespace Update_Checker
 {
     public class JSONStruc
     {
-        public string tag_name { get; set; }
-        public string html_url { get; set; }
-        public string name { get; set; }
+        public string tag_name { get; set; } // Version
+        public string html_url { get; set; } // Where to go to get
+        public string name { get; set; } // The visible name
 
-        public string? error { get; set; }
+        public string published_at { get; set; } // Published date
+        public string body { get; set; } // Description
+
+        public string? error { get; set; } // Deprecated
 
         public JSONStruc()
         {

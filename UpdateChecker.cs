@@ -167,6 +167,50 @@ namespace Update_Checker
 
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="scanableUrl"></param>
+        /// <returns></returns>
+        public async Task<updateObject> GetUpdateObject(scanableUrl scanableUrl)
+        {
+            // Make URI
+            string url = @"https://api.github.com/repos/" + scanableUrl.OWNERNAME + "/" + scanableUrl.REPONAME + "/releases/latest";
+
+            REPONAME = scanableUrl.REPONAME;
+            OWNERNAME = scanableUrl.OWNERNAME;
+
+            // Http call
+            apiCaller apiCaller = new apiCaller();
+            JSONStruc response = await apiCaller.mkHttpCall(url);
+
+            updateObject updateObject = new updateObject();
+
+            updateObject.dateReleased = response!.published_at;
+            updateObject.webURL = response!.html_url;
+            updateObject.description = response!.body;
+            updateObject.versionName = response!.name;
+
+            // Things we can do in other functions
+
+            if(scanableUrl.currentVersion == null)
+            {
+                updateObject.isUpdate = false;
+            }
+            else
+            {
+                updateObject.isUpdate = await CheckForUpdates(scanableUrl.currentVersion);
+            }
+
+            updateObject.version = await LatestVersionTag();
+           
+            
+
+
+            return updateObject;
+
+        }
+
         internal bool validCreds()
         {
             if (OWNERNAME == null || REPONAME == null)
