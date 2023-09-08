@@ -17,9 +17,10 @@ namespace Update_Checker
         public string? dateReleased { get; set; }
         public string? webURL { get; set; }
 
-        // Owner Information 
-        // TODO:
-        // To add this stuff
+        public bool isUpdate { get; set; }
+
+        // Download related stuff
+        public string[] downloadAssets { get; set; }
 
 
         // Other Information
