@@ -5,8 +5,13 @@
     <RootNamespace>Update_Checker</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.1.0-beta</Version>
+    <Version>0.3.0</Version>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Authors>ChobbyCode</Authors>
+    <Copyright>ChobbyCode 2023</Copyright>
+    <PackageProjectUrl>https://www.nuget.org/packages/Update_Checker/#readme-body-tab</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ChobbyCode/Update-Checker/</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

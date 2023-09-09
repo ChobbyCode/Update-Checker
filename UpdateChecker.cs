@@ -132,7 +132,7 @@ namespace Update_Checker
                 return false;
             }
 
-            JSONStruc response;
+            JSONStruc? response;
 
             if (possibleCache())
             {
