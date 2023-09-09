@@ -98,7 +98,7 @@ public static async void checkForUpdate()
 
     if(await checker.CheckForUpdates(currentVersion))
     {
-        Console.WriteLine("There is an update available. Update " + latestVersion + " is available.");
+        Console.WriteLine($"There is an update available. Update {latestVersion} is available.");
     }
 }
 ```
