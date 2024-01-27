@@ -2,25 +2,6 @@
 
 ChobbyCode Update Checker is a free open source tool designed to make checking for updates on github easier. UC has features such as getting the latest version, seeing if a update is available and more. UC has native Chill support. However, even though Chill is my own software, it does get flagged by AntiViruses for been dangerous which may deter anyone from using YOUR software.
 
-> #### I usually abbreviate the app name to just UC, so don't get confused.
-
-### Why use this
-- ✅ - Makes code tidier
-- ✅ - Simple & Easy
-- ✅ - 4 Click Install
-
-  
-### Features
-- ✅ - Checking for updates
-- ✅ - Data caching to reduce API calls
-- ✅ - Automatic Downloads (via Chill)
-
-### Planned Features
-- ❌ - Access private repos using auth key
-- ❌ - Log Files
-- ❌ - Multiple repo support
-- ❌ - Add support for not github stuff :)
-
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
 
 ## Installation
@@ -32,6 +13,8 @@ To install with NuGet, create a new c# project and click on your solution or pro
 ## Usage
 
 ### Setup
+
+[The below code is outdated, please click here to view the most recent methods](https://github.com/ChobbyCode/Update-Checker/wiki/Service-Release-2-For-v0.3.0-Test)
 
 Update-Checker requires its own function to run all the operations in. You can have as many of these functions as you want but they cannot be called the same thing for clear reasons.
 
