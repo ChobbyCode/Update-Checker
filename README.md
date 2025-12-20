@@ -1,5 +1,11 @@
 # Update-Checker
 
+> [!WARNING]
+> ChobbyCode Update Checker is no longer maintained, nor endorsed. I have created a better package for installing/updating/uninstalling packages called [InstallerJazz](https://github.com/ChobbyCode/InstallerJazz). Please use this instead.
+
+> [!WARNING]
+> This was one of the first projects I created, and published to github as a proper usable application that I'd use. Therefore, it isn't actually that good, and has a lot of issues which I've created new software to resolve. If you want to check out some of my actually good code, I'd recommend checking out some of my later C++ code, or checking out Obsidian.md Comments (on my profile). Which is a fully functioning application.
+
 ChobbyCode Update Checker is a free open source tool designed to make checking for updates on github easier. UC has features such as getting the latest version, seeing if a update is available and more. UC has native Chill support. However, even though Chill is my own software, it does get flagged by AntiViruses for been dangerous which may deter anyone from using YOUR software.
 
 If you want to contribute fork the repository then create a push request and I will review your code and add or decline it.
